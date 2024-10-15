@@ -19,3 +19,26 @@
         jtblCursos.setModel(dtmCursos);
         jtblCursos.setCellSelectionEnabled(true);
     }
+    
+    private void setListEstudiantes(String nombreCurso) {
+        DefaultListModel dlmEstudiantes = new DefaultListModel();
+        for (Estudiantes est : estudiante) {
+            if (est.getNombreCur().equals(nombreCurso)) {
+                dlmEstudiantes.addElement(est.getNombreEst()); // Add students of the selected course
+            }
+        }
+        if (dlmEstudiantes.getSize() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay estudiantes inscritos en este curso.");
+        } else {
+            jlstEstudiantes.setModel(dlmEstudiantes);
+            jlblCurso.setText("Curso: " + nombreCurso);
+        }
+    }
+
+    private void setComboboxCursos() {
+        DefaultComboBoxModel<String> dcmCursos = (DefaultComboBoxModel<String>) jcmbCursos.getModel();
+        dcmCursos.removeAllElements();
+        for (Cursos cur : curso) {
+            dcmCursos.addElement(cur.getNombreCur());
+        }
+    }
