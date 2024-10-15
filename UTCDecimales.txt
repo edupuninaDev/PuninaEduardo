@@ -1,0 +1,40 @@
+
+
+import java.text.DecimalFormat;
+import javax.swing.JTextField;
+
+
+public class UTCDecimales extends JTextField {
+    
+    public UTCDecimales() {
+        this.setText("0.00");
+        this.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
+        this.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
+    }
+    
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') && (c != '.' || this.getText().contains("."))) {
+            evt.consume();
+        }
+    }
+    
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) { 
+        if (this.getText().isEmpty()) {
+            this.setText("0.00");
+        } else {
+            DecimalFormat df = new DecimalFormat("#.00");
+            float decimal = Float.parseFloat(this.getText());
+            this.setText(df.format(decimal));
+        }
+    }
+    
+}
