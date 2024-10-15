@@ -1,0 +1,21 @@
+ private void setTableCursos() {
+        DefaultTableModel dtmCursos = new DefaultTableModel(carreras, 0);
+        dtmCursos.setRowCount(0);
+        ArrayList<String> softwareCourses = new ArrayList<>();
+        ArrayList<String> tiCourses = new ArrayList<>();
+        for (Cursos cur : curso) {
+            if ("Software".equals(cur.getNombreCar())) {
+                softwareCourses.add(cur.getNombreCur());
+            } else if ("TI".equals(cur.getNombreCar())) {
+                tiCourses.add(cur.getNombreCur());
+            }
+        }
+        int maxRows = Math.max(softwareCourses.size(), tiCourses.size());
+        for (int i = 0; i < maxRows; i++) {
+            String softwareCourse = i < softwareCourses.size() ? softwareCourses.get(i) : "";
+            String tiCourse = i < tiCourses.size() ? tiCourses.get(i) : "";
+            dtmCursos.addRow(new Object[]{softwareCourse, tiCourse});
+        }
+        jtblCursos.setModel(dtmCursos);
+        jtblCursos.setCellSelectionEnabled(true);
+    }
