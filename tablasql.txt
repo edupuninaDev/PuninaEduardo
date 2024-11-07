@@ -1,0 +1,17 @@
+ private void setTableEstudiantes() {
+        DefaultTableModel dtmEstudiantes = new DefaultTableModel(new Object[]{"Cedula", "Nombre", "Apellido", "Telefono", "Direccion"}, 0);
+        dtmEstudiantes.setRowCount(0);
+        ArrayList<Estudiante> estudiantes = estudiante.obtenerEstudiantes();
+        for (Estudiante estudiante1 : estudiantes) {
+            Object[] datos = {
+                estudiante1.getCedula(),
+                estudiante1.getNombre(),
+                estudiante1.getApellido(),
+                estudiante1.getTelefono(),
+                estudiante1.getDireccion()
+            };
+            dtmEstudiantes.addRow(datos);
+        }
+        jtblEstudiantes.setModel(dtmEstudiantes);
+
+    }

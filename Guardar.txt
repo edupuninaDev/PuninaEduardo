@@ -1,0 +1,42 @@
+ public boolean saveEstudiante(Estudiante estudiante) {
+        try {
+            if (estudiante.getCedula().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese su cedula ");
+                return false;
+            } else if (estudiante.getCedula().length() != 10) {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida ");
+                return false;
+            } else if (estudiante.getNombre().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese su nombre ");
+                return false;
+            } else if (estudiante.getApellido().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese su apellido ");
+                return false;
+            } else {
+                String sql = "INSERT INTO estudiantes (id_est, nom_est, ape_est, telf_est, dir_est) VALUES (?,?,?,?,?)";
+                PreparedStatement ps = MysqlConnection.getConection().prepareStatement(sql);
+                ps.setString(1, estudiante.getCedula());
+                ps.setString(2, estudiante.getNombre());
+                ps.setString(3, estudiante.getApellido());
+                if (estudiante.getTelefono().isEmpty()) {
+                    ps.setString(4, "0000000000");
+                } else if (estudiante.getTelefono().length() != 10) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un numero de telfono valido");
+                    return false;
+                } else {
+                    ps.setString(4, estudiante.getTelefono());
+                }
+                if (estudiante.getDireccion().isEmpty()) {
+                    ps.setString(5, "S/N");
+                } else {
+                    ps.setString(5, estudiante.getDireccion());
+                }
+                if (ps.executeUpdate() > 0) {
+                    JOptionPane.showMessageDialog(null, "Se guardo de manera correcta");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        return true;
+    }
